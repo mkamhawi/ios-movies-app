@@ -16,6 +16,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     var page: Int
     var category: String
     var movies: [Movie]?
+    var refresher: UIRefreshControl!
     @IBOutlet weak var movieCollectionView: UICollectionView!
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
     
@@ -29,12 +30,12 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         }
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         networkOperations = NetworkOperations()
         movies = nil
         page = 1
         category = ""
+        refresher = UIRefreshControl()
         super.init(coder: aDecoder)
     }
     
@@ -42,6 +43,9 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false
         onCategoryChanged()
+        refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: #selector(MovieGrid.refreshMovieData), for: UIControlEvents.valueChanged)
+        movieCollectionView.addSubview(refresher)
         // Do any additional setup after loading the view.
     }
 
@@ -142,6 +146,9 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
                 self.movies = movies
                 self.page = movies.count / 20
                 movieCollectionView.reloadData()
+                if self.refresher.isRefreshing {
+                    self.refresher.endRefreshing()
+                }
                 return true
             }
             return false
@@ -157,6 +164,10 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
                 _ = self.loadSavedMovieData()
             }
         }
+    }
     
+    func refreshMovieData() {
+        self.page = 1
+        self.downloadMovieData()
     }
 }
