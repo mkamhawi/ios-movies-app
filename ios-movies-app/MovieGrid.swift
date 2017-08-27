@@ -67,11 +67,28 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     func setupViewForCompactWidth() {
         let font = UIFont.systemFont(ofSize: 10)
         categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        updateCollectionCellSize(numberOfCellsPerRow: 3)
     }
 
     func setupViewForRegularWidth() {
         let font = UIFont.systemFont(ofSize: 14)
         categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        updateCollectionCellSize(numberOfCellsPerRow: 5)
+    }
+    
+    func updateCollectionCellSize(numberOfCellsPerRow: CGFloat) {
+        let cellWidth = UIScreen.main.bounds.width / numberOfCellsPerRow - (2 + numberOfCellsPerRow * 1)
+        let cellHeight = cellWidth * 1.5
+        let cellSize = CGSize(width: cellWidth, height: cellHeight)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = cellSize
+        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        layout.minimumLineSpacing = 1.0
+        layout.minimumInteritemSpacing = 1.0
+        movieCollectionView.setCollectionViewLayout(layout, animated: true)
+        movieCollectionView.reloadData()
     }
     
     /*
