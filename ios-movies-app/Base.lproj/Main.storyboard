@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="haI-hK-JEa">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -34,33 +34,34 @@
                         <viewControllerLayoutGuide type="bottom" id="46I-Tg-EGI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="X1e-QZ-agK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fXA-QR-ANs">
-                                <rect key="frame" x="0.0" y="101" width="375" height="566"/>
+                                <rect key="frame" x="0.0" y="105" width="320" height="375"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="ddK-5c-VCK">
-                                    <size key="itemSize" width="200" height="250"/>
+                                    <size key="itemSize" width="150" height="200"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieItem" id="utx-QQ-UQT">
-                                        <rect key="frame" x="87.5" y="0.0" width="200" height="250"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTC-7L-dkf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <size key="customSize" width="200" height="250"/>
+                                        <edgeInsets key="layoutMargins" top="0.0" left="5" bottom="5" right="0.0"/>
+                                        <size key="customSize" width="150" height="200"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -69,7 +70,7 @@
                                 </connections>
                             </collectionView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Srg-DD-gfv">
-                                <rect key="frame" x="10" y="72" width="355" height="29"/>
+                                <rect key="frame" x="-17.5" y="72" width="355" height="29"/>
                                 <segments>
                                     <segment title="Popular"/>
                                     <segment title="Upcoming"/>
@@ -89,7 +90,7 @@
                             <constraint firstItem="fXA-QR-ANs" firstAttribute="leading" secondItem="X1e-QZ-agK" secondAttribute="leading" id="d3Y-cT-tCa"/>
                             <constraint firstItem="Srg-DD-gfv" firstAttribute="top" secondItem="6OJ-5R-zR3" secondAttribute="bottom" constant="8" id="jc1-wO-evl"/>
                             <constraint firstItem="fXA-QR-ANs" firstAttribute="top" secondItem="Srg-DD-gfv" secondAttribute="bottom" constant="8" id="ryP-On-sLm">
-                                <variation key="heightClass=regular-widthClass=compact" constant="1"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="5"/>
                             </constraint>
                         </constraints>
                     </view>

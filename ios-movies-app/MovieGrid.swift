@@ -17,6 +17,17 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     var category: String
     var movies: [Movie]?
     @IBOutlet weak var movieCollectionView: UICollectionView!
+    @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
+    
+    @IBAction func onCategoryChanged() {
+        if let categoryName = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex) {
+            self.category = categoryName.lowercased().replacingOccurrences(of: " ", with: "_")
+            self.page = 1
+            if !loadSavedMovieData() {
+                downloadMovieData()
+            }
+        }
+    }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,6 +40,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.automaticallyAdjustsScrollViewInsets = false
         onCategoryChanged()
         // Do any additional setup after loading the view.
     }
@@ -38,17 +50,28 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
-    
-    
-    @IBAction func onCategoryChanged() {
-        if let categoryName = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex) {
-            self.category = categoryName.lowercased().replacingOccurrences(of: " ", with: "_")
-            self.page = 1
-            if !loadSavedMovieData() {
-                downloadMovieData()
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            switch traitCollection.horizontalSizeClass {
+            case .compact:
+                setupViewForCompactWidth()
+            case.unspecified: fallthrough
+            case.regular:
+                setupViewForRegularWidth()
             }
         }
+    }
+    
+    func setupViewForCompactWidth() {
+        let font = UIFont.systemFont(ofSize: 10)
+        categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+    }
+
+    func setupViewForRegularWidth() {
+        let font = UIFont.systemFont(ofSize: 14)
+        categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
     }
     
     /*
@@ -77,7 +100,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
             let posterUrl = URL(string: networkOperations.posterBaseUrl + posterPath)
             movieImageView.kf.setImage(with: posterUrl)
         } else {
-            let posterUrl = URL(string: "http://via.placeholder.com/200x250")
+            let posterUrl = URL(string: "http://via.placeholder.com/150x200")
             movieImageView.kf.setImage(with: posterUrl)
         }
         return cell
