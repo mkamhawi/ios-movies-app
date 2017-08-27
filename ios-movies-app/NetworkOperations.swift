@@ -13,15 +13,15 @@ import ObjectMapper
 class NetworkOperations {
     
     private let baseUrl: String = "https://api.themoviedb.org/3/movie"
-    private let posterBaseUrl: String = "https://image.tmdb.org/t/p/w185"
-    private let youtubeBaseUrl: String = "https://www.youtube.com/watch"
+    public private(set) var posterBaseUrl: String = "https://image.tmdb.org/t/p/w185"
+    public private(set) var youtubeBaseUrl: String = "https://www.youtube.com/watch"
     private let apiKey: String
     
     init() {
         apiKey = Utilities().getApiKey()
     }
     
-    public func getMovies(category: String, page: Int = 1) {
+    public func getMovies(category: String, page: Int, completionHandler: @escaping () -> Void) {
         let parameters = [
             "api_key": apiKey,
             "page": String(page)
@@ -37,7 +37,7 @@ class NetworkOperations {
                     let movieCollection = Mapper<MovieCollectionDto>()
                         .map(JSONString: movies)
                     
-                    movieCollection?.insert(into: category)
+                    movieCollection?.insert(into: category, deleteOldData: page == 1, completionHandler: completionHandler)
                 case .failure(let error):
                     print("Error: NetworkOperation getMovies: \(error)")
                 

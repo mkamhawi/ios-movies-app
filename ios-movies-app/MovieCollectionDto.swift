@@ -26,7 +26,7 @@ class MovieCollectionDto: Mappable {
         results <- map["results"]
     }
     
-    func insert(into categoryName: String) {
+    func insert(into categoryName: String, deleteOldData: Bool, completionHandler: @escaping () -> Void) {
         AppDelegate.persistentContainer.performBackgroundTask { context in
             let request: NSFetchRequest<Category> = Category.fetchRequest()
             request.predicate = NSPredicate(format: "name = %@", argumentArray: [categoryName])
@@ -42,16 +42,23 @@ class MovieCollectionDto: Mappable {
                     category.name = categoryName
                 }
                 
+                if deleteOldData {
+                    category.movies?.forEach({ movie in
+                        context.delete(movie as! NSManagedObject)
+                    })
+                }
+                
                 for movie in self.results! {
                     MovieDto.insert(movie: movie, into: category, within: context)
                 }
                 do {
                     try context.save()
+                    completionHandler()
                 } catch {
-                    fatalError("Error: MovieCollectionDto.insert(): \(error)")
+                    print("Error: MovieCollectionDto.insert(): \(error)")
                 }
             } catch {
-                fatalError("Error: MovieCollectionDto.insert(): \(error)")
+                print("Error: MovieCollectionDto.insert(): \(error)")
             }
         }
     }
