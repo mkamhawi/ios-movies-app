@@ -83,9 +83,9 @@ class MovieDto: Mappable {
                 newMovie.backdropPath = movie.backdropPath
                 newMovie.releaseDate = movie.releaseDate! as NSDate
                 newMovie.overview = movie.overview
-                newMovie.popularity = movie.popularity!
-                newMovie.voteCount = movie.voteCount!
-                newMovie.voteAverage = movie.voteAverage!
+                newMovie.popularity = (movie.popularity ?? nil)!
+                newMovie.voteCount = (movie.voteCount ?? nil)!
+                newMovie.voteAverage = (movie.voteAverage ?? nil)!
                 newMovie.addToCategories(category)
             }
         } catch {
@@ -93,45 +93,45 @@ class MovieDto: Mappable {
         }
     }
     
-    static func update(movieDto: MovieDto) {
+    func update(completionHandler: @escaping () -> Void) {
         AppDelegate.persistentContainer.performBackgroundTask { context in
             let request: NSFetchRequest<Movie> = Movie.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %@", argumentArray: [movieDto.id])
+            request.predicate = NSPredicate(format: "id = %@", argumentArray: [self.id])
             
             do {
                 let matches = try context.fetch(request)
                 assert(matches.count == 1, "MovieDto -- update: database inconsistency")
                 let movie = matches[0]
                 
-                movie.id = movieDto.id
-                movie.title = movieDto.title
-                movie.tagline = movieDto.tagline
-                movie.status = movieDto.status
-                movie.homepage = movieDto.homepage
-                movie.posterPath = movieDto.posterPath
-                movie.backdropPath = movieDto.backdropPath
-                movie.releaseDate = movieDto.releaseDate! as NSDate
-                movie.overview = movieDto.overview
-                movie.popularity = movieDto.popularity!
-                movie.voteCount = movieDto.voteCount!
-                movie.voteAverage = movieDto.voteAverage!
-                movie.budget = movieDto.budget!
-                movie.revenue = movieDto.revenue!
-                movie.runtime = movieDto.runtime!
+                movie.id = self.id
+                movie.title = self.title
+                movie.tagline = self.tagline
+                movie.status = self.status
+                movie.homepage = self.homepage
+                movie.posterPath = self.posterPath
+                movie.backdropPath = self.backdropPath
+                movie.releaseDate = self.releaseDate! as NSDate
+                movie.overview = self.overview
+                movie.popularity = (self.popularity ?? nil)!
+                movie.voteCount = (self.voteCount ?? nil)!
+                movie.voteAverage = (self.voteAverage ?? nil)!
+                movie.budget = (self.budget ?? nil)!
+                movie.revenue = (self.revenue ?? nil)!
+                movie.runtime = (self.runtime ?? nil)!
                 
-                movieDto.generes?.forEach({ genreDto in
+                self.generes?.forEach({ genreDto in
                     GenreDto.add(genreDto: genreDto, to: movie, with: context)
                 })
                 
-                movieDto.spokenLanguages?.forEach({ language in
+                self.spokenLanguages?.forEach({ language in
                     LanguageDto.add(languageDto: language, to: movie, with: context)
                 })
                 
-                movieDto.productionCountries?.forEach({ country in
+                self.productionCountries?.forEach({ country in
                     CountryDto.add(countryDto: country, to: movie, with: context)
                 })
                 
-                movieDto.productionCompanies?.forEach({ company in
+                self.productionCompanies?.forEach({ company in
                     CompanyDto.add(companyDto: company, to: movie, with: context)
                 })
                 
@@ -139,7 +139,7 @@ class MovieDto: Mappable {
                     movie.removeFromReviews(savedReviews)
                 }
                 
-                movieDto.reviews?.forEach({ newReview in
+                self.reviews?.forEach({ newReview in
                     let review = Review(context: context)
                     review.id = newReview.id
                     review.author = newReview.author
@@ -153,7 +153,7 @@ class MovieDto: Mappable {
                     movie.removeFromTrailers(savedTrailers)
                 }
                 
-                movieDto.trailers?.forEach({ newTrailer in
+                self.trailers?.forEach({ newTrailer in
                     let trailer = Trailer(context: context)
                     trailer.name = newTrailer.name
                     trailer.size = newTrailer.size
@@ -164,6 +164,7 @@ class MovieDto: Mappable {
                 })
                 
                 try context.save()
+                completionHandler()
             } catch {
                 fatalError("MovieDto update: \(error)")
             }

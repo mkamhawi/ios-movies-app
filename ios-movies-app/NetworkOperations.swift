@@ -45,14 +45,14 @@ class NetworkOperations {
             })
     }
     
-    public func getMovieDetails(movieId: String) {
+    public func getMovieDetails(movieId: Int64, completionHandler: @escaping () -> Void) {
         let parameters = [
             "api_key": apiKey,
             "append_to_response": "trailers,reviews"
         ]
         
         Alamofire
-            .request(baseUrl + "/" + movieId, parameters: parameters)
+            .request(baseUrl + "/" + String(movieId), parameters: parameters)
             .responseString(completionHandler: { (response: DataResponse<String>) in
                 switch response.result {
                 case .success(let movie):
@@ -61,7 +61,7 @@ class NetworkOperations {
                     let movieDetails = Mapper<MovieDto>()
                         .map(JSONString: movie)
                     
-                    MovieDto.update(movieDto: movieDetails!)
+                    movieDetails?.update(completionHandler: completionHandler)
                 case .failure(let error):
                     print("Error: NetworkOperation getMovieDetails: \(error)")
                 }

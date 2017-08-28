@@ -18,7 +18,7 @@ class LanguageDto: Mappable {
     }
     
     func mapping(map: Map) {
-        isoCode <- map["iso_3166_1"]
+        isoCode <- map["iso_639_1"]
         name <- map["name"]
     }
     
