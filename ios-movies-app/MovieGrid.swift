@@ -95,16 +95,6 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         movieCollectionView.reloadData()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -135,6 +125,17 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "movieDetailsSegue" {
+            let cell = sender as! UICollectionViewCell
+            if let index = self.movieCollectionView.indexPath(for: cell)?.item {
+                let movieDetailsVC = segue.destination as! MovieDetailsViewController
+                movieDetailsVC.movieId = movies?[index].id
+            }
+        }
+    }
+
     
     func loadSavedMovieData() -> Bool {
         let request: NSFetchRequest<Movie> = Movie.fetchRequest()
