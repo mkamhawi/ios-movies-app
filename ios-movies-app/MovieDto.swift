@@ -26,7 +26,7 @@ class MovieDto: Mappable {
     var budget: Double?
     var revenue: Double?
     var runtime: Double?
-    var generes: [GenreDto]?
+    var genres: [GenreDto]?
     var productionCompanies: [CompanyDto]?
     var productionCountries: [CountryDto]?
     var spokenLanguages: [LanguageDto]?
@@ -57,12 +57,12 @@ class MovieDto: Mappable {
         budget <- map["budget"]
         revenue <- map["revenue"]
         runtime <- map["runtime"]
-        generes <- map["generes"]
+        genres <- map["genres"]
         productionCompanies <- map["production_companies"]
         productionCountries <- map["production_countries"]
         spokenLanguages <- map["spoken_languages"]
-        trailers <- map["trailers"]["youtube"]
-        reviews <- map["reviews"]["results"]
+        trailers <- map["trailers.youtube"]
+        reviews <- map["reviews.results"]
     }
     
     static func insert(movie: MovieDto, into category: Category, within context: NSManagedObjectContext) {
@@ -124,7 +124,7 @@ class MovieDto: Mappable {
                 movie.revenue = (self.revenue ?? nil)!
                 movie.runtime = (self.runtime ?? nil)!
                 
-                self.generes?.forEach({ genreDto in
+                self.genres?.forEach({ genreDto in
                     GenreDto.add(genreDto: genreDto, to: movie, with: context)
                 })
                 
