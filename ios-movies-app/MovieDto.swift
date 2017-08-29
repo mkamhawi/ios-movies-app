@@ -88,9 +88,9 @@ class MovieDto: Mappable {
                 newMovie.backdropPath = movie.backdropPath
                 newMovie.releaseDate = movie.releaseDate! as NSDate
                 newMovie.overview = movie.overview
-                newMovie.popularity = (movie.popularity ?? nil)!
-                newMovie.voteCount = (movie.voteCount ?? nil)!
-                newMovie.voteAverage = (movie.voteAverage ?? nil)!
+                newMovie.popularity = movie.popularity ?? 0
+                newMovie.voteCount = movie.voteCount ?? 0
+                newMovie.voteAverage = movie.voteAverage ?? 0
                 newMovie.addToCategories(category)
             }
         } catch {
@@ -117,12 +117,12 @@ class MovieDto: Mappable {
                 movie.backdropPath = self.backdropPath
                 movie.releaseDate = self.releaseDate! as NSDate
                 movie.overview = self.overview
-                movie.popularity = (self.popularity ?? nil)!
-                movie.voteCount = (self.voteCount ?? nil)!
-                movie.voteAverage = (self.voteAverage ?? nil)!
-                movie.budget = (self.budget ?? nil)!
-                movie.revenue = (self.revenue ?? nil)!
-                movie.runtime = (self.runtime ?? nil)!
+                movie.popularity = self.popularity ?? 0
+                movie.voteCount = self.voteCount ?? 0
+                movie.voteAverage = self.voteAverage ?? 0
+                movie.budget = self.budget ?? 0
+                movie.revenue = self.revenue ?? 0
+                movie.runtime = self.runtime ?? 0
                 
                 self.genres?.forEach({ genreDto in
                     GenreDto.add(genreDto: genreDto, to: movie, with: context)
