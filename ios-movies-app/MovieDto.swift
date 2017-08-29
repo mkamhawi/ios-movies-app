@@ -45,7 +45,12 @@ class MovieDto: Mappable {
         posterPath <- map["poster_path"]
         backdropPath <- map["backdrop_path"]
         overview <- map["overview"]
-        releaseDate <- (map["release_date"], DateTransform())
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        if let rawDate = map["release_date"].currentValue as? String, let date = formatter.date(from: rawDate) {
+            releaseDate = date
+        }
         popularity <- map["popularity"]
         voteAverage <- map["vote_average"]
         voteCount <- map["vote_count"]
