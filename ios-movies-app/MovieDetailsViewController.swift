@@ -58,7 +58,9 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
             formatter.dateStyle = .medium
             movieTitle.text = movieDetails.title ?? ""
             tagline.text = movieDetails.tagline ?? ""
-            releaseDate.text = formatter.string(from: movieDetails.releaseDate! as Date) 
+            if movieDetails.releaseDate != nil {
+                releaseDate.text = formatter.string(from: movieDetails.releaseDate! as Date)
+            }
             overview.text = movieDetails.overview ?? ""
             if let posterPath = movieDetails.posterPath {
                 let posterUrl = URL(string: networkOperations.posterBaseUrl + posterPath)
