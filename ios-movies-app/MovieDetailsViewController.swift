@@ -131,4 +131,49 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         return cell!
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            if self.trailers?[indexPath.row] != nil {
+                self.openTrailer(index: indexPath.row)
+            } else {
+                self.displayReview(index: indexPath.row)
+            }
+        } else {
+            self.displayReview(index: indexPath.row)
+        }
+        self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func openTrailer(index: Int) {
+        if self.trailers?[index] != nil {
+            let trailer = self.trailers![index]
+            print("\(trailer.name ?? "nil") at \(trailer.source ?? "nil")")
+            if let trailerSource = trailer.source {
+                let appUrl = URL(string: "youtube://\(trailerSource)")
+                if UIApplication.shared.canOpenURL(appUrl!) {
+                    UIApplication.shared.open(appUrl!, options: [:], completionHandler: nil)
+                } else {
+                    let webUrl = URL(string: "https://www.youtube.com/watch?v=\(trailerSource)")
+                    UIApplication.shared.open(webUrl!, options: [:], completionHandler: nil)
+                }
+            }
+        }
+    }
+    
+    func displayReview(index: Int) {
+        if self.reviews?[index] != nil {
+            let review = self.reviews![index]
+            performSegue(withIdentifier: "review", sender: review)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "review" {
+            let reviewScene = segue.destination as! ReviewViewController
+            if let review = sender as! Review? {
+                reviewScene.review = review
+            }
+        }
+    }
 }
