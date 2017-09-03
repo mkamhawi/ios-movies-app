@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,6 +47,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="TKi-aQ-U1s">
+                                    <rect key="frame" x="0.0" y="-64" width="414" height="631"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieItem" id="utx-QQ-UQT">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
@@ -99,6 +105,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="sbG-c8-j2j"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="TKi-aQ-U1s" id="nqR-nh-STm"/>
                         <outlet property="categorySegmentedControl" destination="Srg-DD-gfv" id="Hks-rW-v16"/>
                         <outlet property="movieCollectionView" destination="fXA-QR-ANs" id="xcD-kf-3JX"/>
                     </connections>
@@ -231,17 +238,26 @@
                                     <outlet property="delegate" destination="DcK-2g-Jq2" id="cK0-LM-fZq"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="VdF-yg-7By">
+                                <rect key="frame" x="20" y="64" width="374" height="672"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="bCO-iQ-DR2" secondAttribute="trailing" id="87j-Re-2Xf"/>
+                            <constraint firstItem="VdF-yg-7By" firstAttribute="top" secondItem="6AD-94-iQU" secondAttribute="bottom" id="C71-gM-sD5"/>
                             <constraint firstItem="bCO-iQ-DR2" firstAttribute="top" secondItem="6AD-94-iQU" secondAttribute="bottom" id="E6P-sO-gfa"/>
+                            <constraint firstItem="LMM-BW-3b7" firstAttribute="top" secondItem="VdF-yg-7By" secondAttribute="bottom" id="FyI-Tc-RUQ"/>
                             <constraint firstItem="bCO-iQ-DR2" firstAttribute="width" secondItem="ae6-WV-rDz" secondAttribute="width" id="LMr-4y-DxN"/>
                             <constraint firstItem="bCO-iQ-DR2" firstAttribute="leading" secondItem="ae6-WV-rDz" secondAttribute="leading" id="XMF-Pp-qts"/>
+                            <constraint firstItem="VdF-yg-7By" firstAttribute="leading" secondItem="ae6-WV-rDz" secondAttribute="leadingMargin" id="nBU-Gz-O2V"/>
                             <constraint firstItem="LMM-BW-3b7" firstAttribute="top" secondItem="bCO-iQ-DR2" secondAttribute="bottom" id="sDy-cz-Qat"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VdF-yg-7By" secondAttribute="trailing" id="umg-im-I6b"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="VdF-yg-7By" id="vn9-dl-A0a"/>
                         <outlet property="moviePoster" destination="d8k-DQ-uYz" id="yGq-U6-JZ4"/>
                         <outlet property="movieTitle" destination="ru7-WE-a6U" id="T88-1I-Iq8"/>
                         <outlet property="overview" destination="k54-PD-95Z" id="Hrn-Zb-flZ"/>

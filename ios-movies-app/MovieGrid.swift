@@ -19,11 +19,13 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     var refresher: UIRefreshControl!
     @IBOutlet weak var movieCollectionView: UICollectionView!
     @IBOutlet weak var categorySegmentedControl: UISegmentedControl!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBAction func onCategoryChanged() {
         if let categoryName = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex) {
             self.category = categoryName.lowercased().replacingOccurrences(of: " ", with: "_")
             self.page = 1
+            self.activityIndicator.startAnimating()
             if !loadSavedMovieData() {
                 downloadMovieData()
             }
@@ -150,11 +152,17 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
                 if self.refresher.isRefreshing {
                     self.refresher.endRefreshing()
                 }
+                if self.activityIndicator.isAnimating {
+                    self.activityIndicator.stopAnimating()
+                }
                 return true
             }
             return false
         } catch {
             print("Error MovieGrid loadSavedMovies: \(error)")
+        }
+        if self.activityIndicator.isAnimating {
+            self.activityIndicator.stopAnimating()
         }
         return false
     }

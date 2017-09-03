@@ -23,9 +23,11 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var overview: UILabel!
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.activityIndicator.startAnimating()
         networkOperations = NetworkOperations()
         self.automaticallyAdjustsScrollViewInsets = false
         self.updateMovieDetails()
@@ -70,6 +72,7 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 moviePoster.kf.setImage(with: posterUrl)
             }
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
     
