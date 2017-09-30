@@ -6,7 +6,7 @@ target 'ios-movies-app' do
   use_frameworks!
 
   # Pods for ios-movies-app
-  pod 'Alamofire', '~> 4.4'
-  pod 'ObjectMapper', '~> 2.2'
-  pod 'Kingfisher', '~> 3.0'
+  pod 'Alamofire', '~> 4.5'
+  pod 'ObjectMapper', '~> 3.0'
+  pod 'Kingfisher', '~> 4.0'
 end

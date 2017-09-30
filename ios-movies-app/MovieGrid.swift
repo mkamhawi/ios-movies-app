@@ -72,13 +72,13 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     
     func setupViewForCompactWidth() {
         let font = UIFont.systemFont(ofSize: 10)
-        categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        categorySegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         updateCollectionCellSize(numberOfCellsPerRow: 3)
     }
 
     func setupViewForRegularWidth() {
         let font = UIFont.systemFont(ofSize: 14)
-        categorySegmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        categorySegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
         updateCollectionCellSize(numberOfCellsPerRow: 5)
     }
     
@@ -175,7 +175,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         }
     }
     
-    func refreshMovieData() {
+    @objc func refreshMovieData() {
         self.page = 1
         self.downloadMovieData()
     }
