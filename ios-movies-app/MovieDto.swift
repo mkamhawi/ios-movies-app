@@ -87,7 +87,7 @@ class MovieDto: Mappable {
                 newMovie.posterPath = movie.posterPath
                 newMovie.backdropPath = movie.backdropPath
                 if movie.releaseDate != nil {
-                    newMovie.releaseDate = movie.releaseDate! as NSDate
+                    newMovie.releaseDate = movie.releaseDate! as Date
                 }
                 newMovie.overview = movie.overview
                 newMovie.popularity = movie.popularity ?? 0
@@ -118,7 +118,7 @@ class MovieDto: Mappable {
                 movie.posterPath = self.posterPath
                 movie.backdropPath = self.backdropPath
                 if self.releaseDate != nil {
-                    movie.releaseDate = self.releaseDate! as NSDate
+                    movie.releaseDate = self.releaseDate! as Date
                 }
                 movie.overview = self.overview
                 movie.popularity = self.popularity ?? 0
