@@ -20,7 +20,7 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var tagline: UILabel!
     @IBOutlet weak var releaseDate: UILabel!
-    @IBOutlet weak var overview: UILabel!
+    @IBOutlet weak var overview: UITextView!
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -37,6 +37,23 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let headerView = tableView.tableHeaderView else {
+            return
+        }
+        
+        let size = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height + 8
+        }
+        
+        tableView.tableHeaderView = headerView
+        tableView.layoutIfNeeded()
     }
     
     func loadMovieDetails() {
