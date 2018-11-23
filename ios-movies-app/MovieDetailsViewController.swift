@@ -169,10 +169,10 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
             if let trailerSource = trailer.source {
                 let appUrl = URL(string: "youtube://\(trailerSource)")
                 if UIApplication.shared.canOpenURL(appUrl!) {
-                    UIApplication.shared.open(appUrl!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(appUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]) as [String : Any], completionHandler: nil)
                 } else {
                     let webUrl = URL(string: "https://www.youtube.com/watch?v=\(trailerSource)")
-                    UIApplication.shared.open(webUrl!, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(webUrl!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]) as [String : Any], completionHandler: nil)
                 }
             }
         }
@@ -193,4 +193,9 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { element in (UIApplication.OpenExternalURLOptionsKey(string: element.key), element.value)})
 }

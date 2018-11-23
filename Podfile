@@ -8,5 +8,5 @@ target 'ios-movies-app' do
   # Pods for ios-movies-app
   pod 'Alamofire', '~> 4.7'
   pod 'ObjectMapper', '~> 3.3'
-  pod 'Kingfisher', '~> 4.9'
+  pod 'Kingfisher', '~> 4.10'
 end

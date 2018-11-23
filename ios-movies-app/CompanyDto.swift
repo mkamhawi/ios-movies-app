@@ -14,7 +14,7 @@ class CompanyDto: Mappable {
     var id: Int32!
     var name: String!
 
-    required init?(map: Map) {
+required init?(map: Map) {
     }
     
     func mapping(map: Map) {

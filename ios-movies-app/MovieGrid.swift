@@ -46,7 +46,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         self.automaticallyAdjustsScrollViewInsets = false
         onCategoryChanged()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refresher.addTarget(self, action: #selector(MovieGrid.refreshMovieData), for: UIControlEvents.valueChanged)
+        refresher.addTarget(self, action: #selector(MovieGrid.refreshMovieData), for: UIControl.Event.valueChanged)
         movieCollectionView.addSubview(refresher)
         // Do any additional setup after loading the view.
     }
@@ -72,13 +72,13 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     
     func setupViewForCompactWidth() {
         let font = UIFont.systemFont(ofSize: 10)
-        categorySegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+        categorySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         updateCollectionCellSize(numberOfCellsPerRow: 3)
     }
 
     func setupViewForRegularWidth() {
         let font = UIFont.systemFont(ofSize: 14)
-        categorySegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: font], for: .normal)
+        categorySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         updateCollectionCellSize(numberOfCellsPerRow: 5)
     }
     
