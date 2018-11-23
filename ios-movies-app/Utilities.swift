@@ -3,7 +3,7 @@
 //  ios-movies-app
 //
 //  Created by mkamhawi on 8/19/17.
-//  Copyright © 2017 Mohamed Elkamhawi. All rights reserved.
+//  Copyright © 2017 Mohamed El-Kamhawi. All rights reserved.
 //
 
 import Foundation
