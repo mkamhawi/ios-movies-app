@@ -27,20 +27,18 @@ class NetworkOperations {
             "page": String(page)
         ]
         
-        Alamofire
+        AF
             .request(baseUrl + "/" + category, parameters: parameters)
-            .responseString(completionHandler: { (response: DataResponse<String>) in
-                switch response.result {
-                case .success(let movies):
-                    print("Request: \(String(describing: response.request))")   // original url request
-                    print("Response: \(String(describing: response.response))") // http url response
+            .response(completionHandler: { (result) in
+                if let data = result.data, let movies = String(data: data, encoding: .utf8) {
+                    print("Request: \(String(describing: result.request))")   // original url request
+                    print("Response: \(String(describing: result.response))") // http url response
                     let movieCollection = Mapper<MovieCollectionDto>()
                         .map(JSONString: movies)
                     
                     movieCollection?.insert(into: category, deleteOldData: page == 1, completionHandler: completionHandler)
-                case .failure(let error):
-                    print("Error: NetworkOperation getMovies: \(error)")
-                
+                } else {
+                    print("Error: NetworkOperation getMovies: \(String(describing: result.error))")
                 }
             })
     }
@@ -51,19 +49,18 @@ class NetworkOperations {
             "append_to_response": "trailers,reviews"
         ]
         
-        Alamofire
+        AF
             .request(baseUrl + "/" + String(movieId), parameters: parameters)
-            .responseString(completionHandler: { (response: DataResponse<String>) in
-                switch response.result {
-                case .success(let movie):
-                    print("Request: \(String(describing: response.request))")   // original url request
-                    print("Response: \(String(describing: response.response))") // http url response
+            .response(completionHandler: { (result) in
+                if let data = result.data, let movie = String(data: data, encoding: .utf8) {
+                    print("Request: \(String(describing: result.request))")   // original url request
+                    print("Response: \(String(describing: result.response))") // http url response
                     let movieDetails = Mapper<MovieDto>()
                         .map(JSONString: movie)
                     
                     movieDetails?.update(completionHandler: completionHandler)
-                case .failure(let error):
-                    print("Error: NetworkOperation getMovieDetails: \(error)")
+                } else {
+                    print("Error: NetworkOperation getMovieDetails: \(String(describing: result.error))")
                 }
             })
     }

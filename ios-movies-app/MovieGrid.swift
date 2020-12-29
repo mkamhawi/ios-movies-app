@@ -83,7 +83,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     }
     
     func updateCollectionCellSize(numberOfCellsPerRow: CGFloat) {
-        let cellWidth = UIScreen.main.bounds.width / numberOfCellsPerRow - (2 + numberOfCellsPerRow * 1)
+        let cellWidth = UIScreen.main.bounds.width / numberOfCellsPerRow
         let cellHeight = cellWidth * 1.5
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
         
