@@ -32,7 +32,7 @@ class NetworkOperations {
             .response(completionHandler: { (result) in
                 if let data = result.data, let movies = String(data: data, encoding: .utf8) {
                     print("Request: \(String(describing: result.request))")   // original url request
-                    print("Response: \(String(describing: result.response))") // http url response
+                    print("Response: \(String(describing: movies))") // http url response
                     let movieCollection = Mapper<MovieCollectionDto>()
                         .map(JSONString: movies)
                     
@@ -54,7 +54,7 @@ class NetworkOperations {
             .response(completionHandler: { (result) in
                 if let data = result.data, let movie = String(data: data, encoding: .utf8) {
                     print("Request: \(String(describing: result.request))")   // original url request
-                    print("Response: \(String(describing: result.response))") // http url response
+                    print("Response: \(String(describing: movie))") // http url response
                     let movieDetails = Mapper<MovieDto>()
                         .map(JSONString: movie)
                     

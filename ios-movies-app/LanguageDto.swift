@@ -23,7 +23,7 @@ class LanguageDto: Mappable {
     }
     
     static func add(languageDto: LanguageDto, to movie: Movie, with context: NSManagedObjectContext) {
-        let uniqnessPredicate = NSPredicate(format: "isoCode = %@", argumentArray: [languageDto.isoCode])
+        let uniqnessPredicate = NSPredicate(format: "isoCode = %@", argumentArray: [languageDto.isoCode!])
         let language = Utilities.findOrCreate(
             typeDto: languageDto,
             with: uniqnessPredicate,

@@ -29,7 +29,6 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         self.activityIndicator.startAnimating()
         networkOperations = NetworkOperations()
-        self.automaticallyAdjustsScrollViewInsets = false
         self.updateMovieDetails()
         // Do any additional setup after loading the view.
     }
@@ -58,7 +57,7 @@ class MovieDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func loadMovieDetails() {
         let request: NSFetchRequest<Movie> = Movie.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", argumentArray: [self.movieId])
+        request.predicate = NSPredicate(format: "id = %@", argumentArray: [self.movieId!])
         do {
             let matches = try AppDelegate.viewContext.fetch(request)
             assert(matches.count == 1, "MovieDetailsViewController-loadMovieDetails: database inconsistency")

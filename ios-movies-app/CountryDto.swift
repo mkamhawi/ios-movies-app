@@ -23,7 +23,7 @@ class CountryDto: Mappable {
     }
     
     static func add(countryDto: CountryDto, to movie: Movie, with context: NSManagedObjectContext) {
-        let uniqnessPredicate = NSPredicate(format: "isoCode = %@", argumentArray: [countryDto.isoCode])
+        let uniqnessPredicate = NSPredicate(format: "isoCode = %@", argumentArray: [countryDto.isoCode!])
         let country = Utilities.findOrCreate(
             typeDto: countryDto,
             with: uniqnessPredicate,

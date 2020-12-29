@@ -67,7 +67,7 @@ class MovieDto: Mappable {
     
     static func insert(movie: MovieDto, into category: Category, within context: NSManagedObjectContext) {
         let request: NSFetchRequest<Movie> = Movie.fetchRequest()
-        request.predicate = NSPredicate(format: "id = %@", argumentArray: [movie.id])
+        request.predicate = NSPredicate(format: "id = %@", argumentArray: [movie.id!])
             
         do {
             let matches = try context.fetch(request)
@@ -103,7 +103,7 @@ class MovieDto: Mappable {
     func update(completionHandler: @escaping () -> Void) {
         AppDelegate.persistentContainer.performBackgroundTask { context in
             let request: NSFetchRequest<Movie> = Movie.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %@", argumentArray: [self.id])
+            request.predicate = NSPredicate(format: "id = %@", argumentArray: [self.id!])
             
             do {
                 let matches = try context.fetch(request)

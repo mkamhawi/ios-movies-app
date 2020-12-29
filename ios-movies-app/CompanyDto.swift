@@ -23,7 +23,7 @@ required init?(map: Map) {
     }
     
     static func add(companyDto: CompanyDto, to movie: Movie, with context: NSManagedObjectContext) {
-        let uniqnessPredicate = NSPredicate(format: "id = %@", argumentArray: [companyDto.id])
+        let uniqnessPredicate = NSPredicate(format: "id = %@", argumentArray: [companyDto.id!])
         let company = Utilities.findOrCreate(
             typeDto: companyDto,
             with: uniqnessPredicate,

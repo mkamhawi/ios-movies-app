@@ -43,7 +43,6 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
         onCategoryChanged()
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: #selector(MovieGrid.refreshMovieData), for: UIControl.Event.valueChanged)
@@ -63,9 +62,12 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
             switch traitCollection.horizontalSizeClass {
             case .compact:
                 setupViewForCompactWidth()
-            case.unspecified: fallthrough
+            case .unspecified:
+                setupViewForCompactWidth()
             case.regular:
                 setupViewForRegularWidth()
+            @unknown default:
+                setupViewForCompactWidth()
             }
         }
     }

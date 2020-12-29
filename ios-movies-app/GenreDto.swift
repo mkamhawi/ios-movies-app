@@ -23,7 +23,7 @@ class GenreDto: Mappable {
     }
     
     static func add(genreDto: GenreDto, to movie: Movie, with context: NSManagedObjectContext) {
-        let uniqnessPredicate = NSPredicate(format: "id = %@", argumentArray: [genreDto.id])
+        let uniqnessPredicate = NSPredicate(format: "id = %@", argumentArray: [genreDto.id!])
         let genre = Utilities.findOrCreate(
             typeDto: genreDto,
             with: uniqnessPredicate,

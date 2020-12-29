@@ -16,7 +16,6 @@ class ReviewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
         if self.review != nil {
             self.reviewerName.text = review?.author
             self.reviewContent.text = review?.content
