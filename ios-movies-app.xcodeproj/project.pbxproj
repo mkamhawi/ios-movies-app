@@ -179,10 +179,9 @@
 			};
 			buildConfigurationList = 04F9B25C1F2E53FB000C66A0 /* Build configuration list for PBXProject "ios-movies-app" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
