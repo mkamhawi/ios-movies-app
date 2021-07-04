@@ -47,6 +47,7 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
         refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: #selector(MovieGrid.refreshMovieData), for: UIControl.Event.valueChanged)
         movieCollectionView.addSubview(refresher)
+        refreshCollectionCellSize()
         // Do any additional setup after loading the view.
     }
 
@@ -58,43 +59,36 @@ class MovieGrid: UIViewController, UICollectionViewDataSource, UICollectionViewD
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
-            switch traitCollection.horizontalSizeClass {
-            case .compact:
-                setupViewForCompactWidth()
-            case .unspecified:
-                setupViewForCompactWidth()
-            case.regular:
-                setupViewForRegularWidth()
-            @unknown default:
-                setupViewForCompactWidth()
+        refreshCollectionCellSize()
+    }
+    
+    func refreshCollectionCellSize() {
+        var postersPerRow : Int
+        switch UITraitCollection.current.horizontalSizeClass {
+        case .compact:
+            postersPerRow = 3
+            if UIDevice.current.orientation != .portrait {
+                postersPerRow = 6
             }
+        case .regular:
+            postersPerRow = 6
+            if UIDevice.current.orientation != .portrait {
+                postersPerRow = 9
+            }
+        default:
+            postersPerRow = 3
         }
-    }
-    
-    func setupViewForCompactWidth() {
-        let font = UIFont.systemFont(ofSize: 10)
-        categorySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-        updateCollectionCellSize(numberOfCellsPerRow: 3)
-    }
-
-    func setupViewForRegularWidth() {
-        let font = UIFont.systemFont(ofSize: 14)
-        categorySegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-        updateCollectionCellSize(numberOfCellsPerRow: 5)
-    }
-    
-    func updateCollectionCellSize(numberOfCellsPerRow: CGFloat) {
-        let cellWidth = UIScreen.main.bounds.width / numberOfCellsPerRow
+        let cellWidth = (UIScreen.main.bounds.width / CGFloat(postersPerRow)).rounded(.down)
         let cellHeight = cellWidth * 1.5
+        print("cellWidth: \(cellWidth)\n cellHeight: \(cellHeight)")
         let cellSize = CGSize(width: cellWidth, height: cellHeight)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = cellSize
-        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        layout.minimumLineSpacing = 1.0
-        layout.minimumInteritemSpacing = 1.0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         movieCollectionView.setCollectionViewLayout(layout, animated: true)
         movieCollectionView.reloadData()
     }
